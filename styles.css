@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+}
+
+.loaded {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;        /* ← se superpone sobre todo */
+    top: 0;
+    left: 0;
+    z-index: 9999;          /* ← queda por encima de cualquier contenido */
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: slideUp 0.8s ease 2.8s forwards;
+}
+
+@keyframes slideUp {
+    to {
+        transform: translateY(-100%);
+    }
+}
+
+.Presentation {
+    text-align: center;
+    font-size: 27px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+.Presentation .name,
+.symbol {
+    font-weight: 900;
+}
+
+.Presentation .name,
+.title {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Presentation .name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+}
+
+.Presentation .name p {
+    transform: translateX(130px);
+    display: inline-block;
+    animation: fadeInLeft 3s ease 0.6s forwards;
+    padding-right: 8px;
+}
+
+.Presentation .symbol {
+    transform: translateY(50px);
+    display: flex;
+    animation: fadeInUp 3s ease forwards;
+    align-items: center;
+    justify-content: center;
+}
+
+.Presentation .title p {
+    transform: translateX(-150px);
+    display: inline-block;
+    animation: fadeInRight 3s ease 1s forwards;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 100;
+    padding-left: 8px;
+}
+
+@keyframes fadeInUp {
+    0% {
+        transform: translateY(50px);
+    }
+
+    15% {
+        transform: translateY(-3px);
+    }
+
+    90% {
+        transform: translateY(-3px);
+    }
+
+    100% {
+        transform: translateY(-50px);
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        transform: translateX(130px);
+    }
+
+    30% {
+        transform: translateX(0);
+    }
+
+    70% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateY(50px);
+    }
+}
+
+@keyframes fadeInRight {
+    0% {
+        transform: translateX(-150px);
+    }
+
+    30% {
+        transform: translateX(0);
+    }
+
+    55% {
+        transform: translateX(0);
+    }
+
+    90% {
+        transform: translateY(50px);
+    }
+    
+    100% {
+        transform: translateY(50px);
+    }
+}
