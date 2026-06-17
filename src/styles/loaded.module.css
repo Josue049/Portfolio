@@ -41,16 +41,16 @@ body {
 }
 
 .Presentation .name,
-.symbol {
-    font-weight: 900;
-}
-
-.Presentation .name,
-.title {
+.Presentation .title {
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.Presentation .name,
+.Presentation .symbol {
+    font-weight: 900;
 }
 
 .Presentation .name {
@@ -73,7 +73,7 @@ body {
     justify-content: center;
 }
 
-.Presentation .title p {
+.Presentation .title p{
     transform: translateX(-150px);
     display: inline-block;
     animation: fadeInRight 3s ease 1s forwards;
@@ -139,3 +139,10 @@ body {
         transform: translateY(50px);
     }
 }
+
+.x-circle img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+}
+
