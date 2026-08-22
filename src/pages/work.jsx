@@ -1,222 +1,206 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import SiteRail from "../components/SiteRail";
+import { categories } from "../data/portfolio";
 import styles from "../styles/work.module.css";
 
-const CATEGORIES = [
-  {
-    id: "projects",
-    label: "PROYECTOS",
-    items: [
-      { id: "sleep", label: "Sleep Watch Alert", detail: { subtitle: "Hackathon Winner", meta: ["CS50 Harvard", "Canadá", "IA"], description: "Proyecto desarrollado como trabajo final de CS50 Harvard. Ganador del Concordia CS Hackathon. Sistema inteligente de monitoreo y alerta para el sueño." } },
-      { id: "agro", label: "Data Agro 5.0", detail: { subtitle: "Agricultura Inteligente", meta: ["FAO", "Tacna", "IA"], description: "Piloto de agricultura con inteligencia artificial liderado para la FAO en campos agrícolas de Tacna." } },
-      { id: "wff", label: "WFF Peru Chapter", detail: { subtitle: "Web Institucional", meta: ["React", "Diseño Web", "WFF"], description: "Desarrollo completo de la plataforma web oficial del capítulo peruano del World Food Forum." } },
-      { id: "voltiger", label: "Voltiger", detail: { subtitle: "Diseño Experimental", meta: ["UI/UX", "Frontend"], description: "Proyecto de exploración visual enfocado en diseño web moderno y experiencias digitales innovadoras." } },
-      { id: "math", label: "Math Game", detail: { subtitle: "Primer Lugar Internacional", meta: ["Francia", "Educación", "Low-Code"], description: "Videojuego educativo de matemáticas ganador del primer lugar en competencia internacional evaluada por ingenieros de Microsoft, Google, Meta, Apple, Disney, Amazon y Huawei." } },
-      { id: "trash", label: "Basura IA", detail: { subtitle: "Computer Vision", meta: ["TACO Dataset", "IA", "Smart City"], description: "Aplicación basada en inteligencia artificial para detección y reporte geolocalizado de residuos urbanos." } },
-      { id: "museum", label: "Museo AR", detail: { subtitle: "Realidad Aumentada", meta: ["3D", "AR", "Patrimonio"], description: "Proyecto para crear el primer museo con realidad aumentada en Tacna utilizando escaneo 3D y experiencias inmersivas." } },
-    ],
-  },
-  {
-    id: "experience",
-    label: "EXPERIENCIA",
-    items: [
-      { id: "fao", label: "FAO Perú", detail: { subtitle: "Ciencia e Innovación", meta: ["Representante Nacional", "Innovación"], description: "Representante alterno nacional en Ciencia e Innovación participando en iniciativas tecnológicas y agrícolas." } },
-      { id: "wffexp", label: "World Food Forum", detail: { subtitle: "Juventud e Innovación", meta: ["ONU", "Alimentación"], description: "Participación en iniciativas juveniles relacionadas con innovación alimentaria y desarrollo sostenible." } },
-      { id: "mintra", label: "Ministerio de Trabajo", detail: { subtitle: "Proyecto IA", meta: ["Inclusión", "Accesibilidad"], description: "Desarrollo de propuesta basada en IA para mejorar oportunidades laborales de personas con discapacidad." } },
-      { id: "muni", label: "Municipalidad de Lima", detail: { subtitle: "Instructor", meta: ["Programación", "Niños"], description: "Docente de programación para niños durante seis meses en programas educativos municipales." } },
-      { id: "robbuild", label: "Robbuild", detail: { subtitle: "Educación STEM", meta: ["Robótica", "Tecnología"], description: "Diseño e impartición de un curso modelo para plataforma de aprendizaje infantil." } },
-    ],
-  },
-  {
-    id: "ai",
-    label: "IA",
-    items: [
-      { id: "agroai", label: "Data Agro 5.0", detail: { subtitle: "Agricultura con IA", meta: ["FAO", "Visión Artificial"], description: "Uso de inteligencia artificial aplicada a monitoreo y análisis agrícola." } },
-      { id: "trashai", label: "Basura IA", detail: { subtitle: "Detección de Residuos", meta: ["Computer Vision", "YOLO"], description: "Sistema inteligente para identificar residuos mediante visión computacional." } },
-      { id: "sleepai", label: "Sleep Watch Alert", detail: { subtitle: "Health AI", meta: ["Hackathon Winner"], description: "Sistema inteligente de monitoreo y alertas relacionado con hábitos de sueño." } },
-      { id: "jobai", label: "Trabajo Inclusivo IA", detail: { subtitle: "Ministerio de Trabajo", meta: ["Accesibilidad", "IA"], description: "Proyecto orientado a mejorar la inclusión laboral mediante herramientas inteligentes." } },
-      { id: "museumai", label: "Museo AR", detail: { subtitle: "Experiencias Inteligentes", meta: ["AR", "3D"], description: "Aplicación de tecnologías inmersivas para patrimonio cultural." } },
-    ],
-  },
-  {
-    id: "awards",
-    label: "PREMIOS",
-    items: [
-      { id: "france", label: "Primer Lugar Francia", detail: { subtitle: "Competencia Internacional", meta: ["1er Lugar"], description: "Ganador absoluto con un videojuego educativo de matemáticas." } },
-      { id: "canada", label: "Hackathon Canadá", detail: { subtitle: "Concordia CS", meta: ["Ganador"], description: "Ganador del Concordia CS Hackathon con Sleep Watch Alert." } },
-      { id: "utp", label: "UTP Destacado x3", detail: { subtitle: "Reconocimiento Académico", meta: ["3 Veces"], description: "Reconocido como estudiante destacado en tres oportunidades." } },
-      { id: "stanford", label: "Beca Stanford", detail: { subtitle: "Apoyo Académico", meta: ["Álgebra Lineal"], description: "Beneficiario de beca para especialización relacionada con álgebra lineal." } },
-    ],
-  },
-  {
-    id: "education",
-    label: "EDUCACIÓN",
-    items: [
-      { id: "systems", label: "Ingeniería de Sistemas", detail: { subtitle: "Formación Profesional", meta: ["Software", "IA"], description: "Formación enfocada en desarrollo de software, innovación e inteligencia artificial." } },
-      { id: "cs50", label: "CS50 Harvard", detail: { subtitle: "Computer Science", meta: ["100%", "Harvard"], description: "Curso completado con calificación perfecta y proyecto premiado internacionalmente." } },
-      { id: "stanfordedu", label: "Stanford Specialization", detail: { subtitle: "Linear Algebra", meta: ["Stanford"], description: "Especialización enfocada en fundamentos matemáticos aplicados a IA." } },
-    ],
-  },
-  {
-    id: "talks",
-    label: "CHARLAS",
-    items: [
-      { id: "uni", label: "Universidad Nacional de Ingeniería", detail: { subtitle: "Conferencista", meta: ["UNI"], description: "Ponencia sobre tecnología, innovación y desarrollo profesional." } },
-      { id: "youth", label: "Youth Food Lab", detail: { subtitle: "Evento de Apertura", meta: ["Teatro Mario Vargas Llosa"], description: "Participación en la apertura del primer laboratorio juvenil de innovación alimentaria." } },
-      { id: "icarrd", label: "ICARRD+20 Colombia", detail: { subtitle: "Representación Internacional", meta: ["Colombia"], description: "Representación de la juventud en encuentro internacional sobre desarrollo rural." } },
-    ],
-  },
-  {
-    id: "contact",
-    label: "CONTACTO",
-    items: [
-      { id: "github", label: "GitHub", detail: { subtitle: "Código Fuente", meta: ["Repositorios"], description: "Explora proyectos, experimentos y contribuciones de desarrollo." } },
-      { id: "linkedin", label: "LinkedIn", detail: { subtitle: "Perfil Profesional", meta: ["Networking"], description: "Experiencia, proyectos y trayectoria profesional." } },
-      { id: "hf", label: "Hugging Face", detail: { subtitle: "Modelos IA", meta: ["Machine Learning"], description: "Modelos, datasets y experimentos relacionados con inteligencia artificial." } },
-      { id: "email", label: "Correo", detail: { subtitle: "Contacto Directo", meta: ["Disponible"], description: "Canal principal para colaboraciones y oportunidades." } },
-      { id: "cv", label: "Curriculum Vitae", detail: { subtitle: "Resumen Profesional", meta: ["PDF"], description: "Versión completa de experiencia, educación y proyectos." } },
-    ],
-  },
-];
-
 const ACTIVE_SLOT = 1;
-const SLOT_WIDTH = 100 / CATEGORIES.length;
+
+function MediaPreview({ detail, title, category }) {
+  const gallery = detail?.gallery || [];
+  const notes = detail?.imageNotes || [];
+
+  return (
+    <div className={styles.mediaBlock}>
+      <div
+        className={styles.coverMedia}
+        style={detail?.image ? { backgroundImage: `linear-gradient(180deg, transparent 25%, rgba(0,0,0,.72) 100%), url("${detail.image}")` } : undefined}
+      >
+        <span>{detail?.image ? "PROJECT COVER" : category}</span>
+        <strong>{title}</strong>
+      </div>
+
+      {gallery.length > 0 && (
+        <div className={styles.miniGallery}>
+          {gallery.slice(0, 3).map((src, index) => (
+            <div
+              className={styles.galleryThumb}
+              key={src}
+              style={{ backgroundImage: `linear-gradient(180deg, transparent, rgba(0,0,0,.58)), url("${src}")` }}
+            >
+              <span>{notes[index] || `Image ${index + 1}`}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Work() {
-  const [catIndex, setCatIndex] = useState(5);
+  const navigate = useNavigate();
+  const [catIndex, setCatIndex] = useState(0);
   const [itemIndex, setItemIndex] = useState(0);
-  const [notification, setNotification] = useState(null);
-  const [clock, setClock] = useState(
-    new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
-  );
 
-  const category = CATEGORIES[catIndex];
+  const category = categories[catIndex];
   const activeItem = category.items[itemIndex];
   const detail = activeItem?.detail;
 
-  useEffect(() => {
-    const tick = setInterval(() => {
-      setClock(new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }));
-    }, 10000);
-    return () => clearInterval(tick);
+  const selectCategory = useCallback((index) => {
+    setCatIndex(index);
+    setItemIndex(0);
   }, []);
 
-  useEffect(() => {
-    setItemIndex(0);
-  }, [catIndex]);
+  const openItem = useCallback((item = activeItem) => {
+    if (!item) return;
+    if (item.href) navigate(item.href);
+    else if (item.external) window.open(item.external, "_blank", "noopener,noreferrer");
+  }, [activeItem, navigate]);
 
   useEffect(() => {
-    const handleKey = (e) => {
-      if (e.key === "ArrowLeft")  setCatIndex((i) => Math.max(0, i - 1));
-      if (e.key === "ArrowRight") setCatIndex((i) => Math.min(CATEGORIES.length - 1, i + 1));
-      if (e.key === "ArrowUp")    setItemIndex((i) => Math.max(0, i - 1));
-      if (e.key === "ArrowDown")  setItemIndex((i) => Math.min(category.items.length - 1, i + 1));
-      if (e.key === "Enter" || e.key === "x" || e.key === "X") {
-        setNotification(`Opening: ${activeItem.label}`);
-        setTimeout(() => setNotification(null), 2000);
-      }
+    const onKey = (event) => {
+      if (event.key === "ArrowLeft") selectCategory(Math.max(0, catIndex - 1));
+      if (event.key === "ArrowRight") selectCategory(Math.min(categories.length - 1, catIndex + 1));
+      if (event.key === "ArrowUp") setItemIndex((i) => Math.max(0, i - 1));
+      if (event.key === "ArrowDown") setItemIndex((i) => Math.min(category.items.length - 1, i + 1));
+      if (event.key === "Enter" || event.key.toLowerCase() === "x") openItem();
     };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [catIndex, itemIndex, category, activeItem]);
 
-  const getCatLeft = (ci) => {
-    const slotOffset = ci - catIndex + ACTIVE_SLOT;
-    return slotOffset * SLOT_WIDTH + SLOT_WIDTH / 2;
-  };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [catIndex, category.items.length, openItem, selectCategory]);
 
-  const activeCatLeft = ACTIVE_SLOT * SLOT_WIDTH + SLOT_WIDTH / 2;
+  const slotWidth = 100 / categories.length;
+  const getLeft = (ci) => (ci - catIndex + ACTIVE_SLOT) * slotWidth + slotWidth / 2;
+  const activeLeft = ACTIVE_SLOT * slotWidth + slotWidth / 2;
+  const canOpen = Boolean(activeItem?.href || activeItem?.external);
 
   return (
-    <div className={styles["ps3-root"]}>
-      <div className={styles["xmb-line"]} />
+    <div className={styles.ps3Root}>
+      <SiteRail />
+      <div className={styles.ambientOne} />
+      <div className={styles.ambientTwo} />
 
-      {/* XMB Horizontal Categories */}
-      <div className={styles["xmb-categories"]}>
-        {CATEGORIES.map((cat, ci) => {
-          const isActive = ci === catIndex;
-          const distance = Math.abs(ci - catIndex);
-          const leftPct = getCatLeft(ci);
-          const visible = leftPct > -10 && leftPct < 110;
-          if (!visible) return null;
+      <header className={styles.workspaceTitle}>
+        <span>PORTFOLIO / 2026</span>
+        <h1>SELECTED<br />WORK.</h1>
+        <p>Projects, experience and experiments where software meets real-world problems.</p>
+      </header>
+
+      <div className={styles.xmbLine} />
+      <div className={styles.xmbCategories}>
+        {categories.map((cat, ci) => {
+          const left = getLeft(ci);
+          if (left < -12 || left > 112) return null;
           return (
-            <div
+            <button
               key={cat.id}
-              className={styles["xmb-cat"]}
-              style={{ left: `${leftPct}%`, opacity: Math.max(0.15, 1 - distance * 0.22) }}
-              onClick={() => setCatIndex(ci)}
+              className={styles.xmbCat}
+              style={{ left: `${left}%`, opacity: Math.max(.18, 1 - Math.abs(ci - catIndex) * .22) }}
+              onClick={() => selectCategory(ci)}
             >
-              {/* ✅ Usamos la clase dedicada del módulo, sin depender de selectores descendientes */}
-              <span className={isActive ? styles["xmb-cat-label-active"] : styles["xmb-cat-label"]}>
-                {cat.label}
-              </span>
-            </div>
+              <span className={ci === catIndex ? styles.xmbCatLabelActive : styles.xmbCatLabel}>{cat.label}</span>
+            </button>
           );
         })}
       </div>
 
-      {/* XMB Vertical Items */}
-      <div className={styles["xmb-items"]} style={{ left: `${activeCatLeft}%` }}>
+      <div className={styles.xmbItems} style={{ left: `${activeLeft}%` }}>
         {category.items.map((item, ii) => {
-          const offset = ii - itemIndex;
-          const isActive = ii === itemIndex;
-          const distance = Math.abs(offset);
+          const off = ii - itemIndex;
+          const active = ii === itemIndex;
           return (
-            <div
+            <button
               key={item.id}
-              className={isActive ? styles["xmb-item-active"] : styles["xmb-item"]}
-              style={{
-                transform: `translateY(${offset * 48}px)`,
-                opacity: Math.max(0, 1 - distance * 0.28),
-              }}
-              onClick={() => {
-                setItemIndex(ii);
-                setNotification(`Opening: ${item.label}`);
-                setTimeout(() => setNotification(null), 2000);
-              }}
+              className={active ? styles.xmbItemActive : styles.xmbItem}
+              style={{ transform: `translateY(${off * 50}px)`, opacity: Math.max(0, 1 - Math.abs(off) * .28) }}
+              onClick={() => active ? openItem(item) : setItemIndex(ii)}
             >
-              {/* ✅ Usamos la clase dedicada del módulo, sin depender de selectores descendientes */}
-              <span className={isActive ? styles["xmb-item-label-active"] : styles["xmb-item-label"]}>
-                {item.label}
-              </span>
-            </div>
+              <span className={active ? styles.xmbItemLabelActive : styles.xmbItemLabel}>{item.label}</span>
+            </button>
           );
         })}
       </div>
 
-      {/* Detail Card */}
       {detail && (
-        <div className={styles["detail-card"]} key={`${catIndex}-${itemIndex}`}>
-          <div className={styles["detail-card-inner"]}>
-            <div className={styles["detail-header"]}>
-              <div className={styles["detail-cat-tag"]}>{category.label}</div>
-              <h2 className={styles["detail-title"]}>{activeItem.label}</h2>
-              <p className={styles["detail-subtitle"]}>{detail.subtitle}</p>
-            </div>
-            <div className={styles["detail-divider"]} />
-            <div className={styles["detail-meta"]}>
-              {detail.meta.map((m, i) => (
-                <span key={i} className={styles["detail-meta-chip"]}>{m}</span>
-              ))}
-            </div>
-            <p className={styles["detail-description"]}>{detail.description}</p>
-            <div className={styles["detail-divider"]} />
-            <div className={styles["detail-actions"]}>
-              <div className={styles["detail-action"]}>
-                <span className={`${styles["ps3-btn"]} ${styles["ps3-btn-x"]}`}>✕</span>
-                <span>Open</span>
+        <aside className={styles.detailCard} key={`${catIndex}-${itemIndex}`}>
+          <div className={styles.detailCardInner}>
+            <MediaPreview detail={detail} title={activeItem.label} category={category.label} />
+
+            <div className={styles.detailContent}>
+              <div className={styles.detailCatTag}>{category.label}</div>
+              <h2 className={styles.detailTitle}>{activeItem.label}</h2>
+              <p className={styles.detailSubtitle}>{detail.subtitle}</p>
+
+              <div className={styles.detailMeta}>
+                {detail.meta?.map((m) => <span key={m} className={styles.detailMetaChip}>{m}</span>)}
+                {detail.location && <span className={styles.detailMetaChip}>{detail.location}</span>}
               </div>
-              <div className={styles["detail-action"]}>
-                <span className={`${styles["ps3-btn"]} ${styles["ps3-btn-t"]}`}>△</span>
-                <span>Options</span>
-              </div>
+
+              <p className={styles.detailDescription}>{detail.description}</p>
+
+              {(detail.role || detail.tech?.length) && (
+                <div className={styles.infoGrid}>
+                  {detail.role && <div><span>ROLE</span><strong>{detail.role}</strong></div>}
+                  {detail.tech?.length > 0 && <div><span>STACK</span><strong>{detail.tech.slice(0, 4).join(" · ")}</strong></div>}
+                </div>
+              )}
+
+              {detail.highlights?.length > 0 && (
+                <ul className={styles.highlightList}>
+                  {detail.highlights.slice(0, 2).map((highlight) => <li key={highlight}>{highlight}</li>)}
+                </ul>
+              )}
+
+              {canOpen && (
+                <button className={styles.openButton} onClick={() => openItem()}>
+                  <span>{activeItem.href ? "View full case study" : "Open link"}</span>
+                  <span>↗</span>
+                </button>
+              )}
             </div>
           </div>
-        </div>
+        </aside>
       )}
 
-      {notification && (
-        <div className={styles["notification"]}>{notification}</div>
-      )}
+      <div className={styles.mobileIntro}>
+        <span>PORTFOLIO / WORK</span>
+        <strong>Selected work.</strong>
+        <p>Choose a category and explore the projects in detail.</p>
+      </div>
+
+      <div className={styles.mobileCategories}>
+        {categories.map((c, i) => (
+          <button className={i === catIndex ? styles.mobileCatActive : ""} onClick={() => selectCategory(i)} key={c.id}>{c.label}</button>
+        ))}
+      </div>
+
+      <div className={styles.mobileCards}>
+        {category.items.map((item) => {
+          const itemDetail = item.detail || {};
+          return (
+            <article key={item.id} className={styles.mobileCard}>
+              {(itemDetail.image || category.type === "project") && (
+                <div
+                  className={styles.mobileCardImage}
+                  style={itemDetail.image ? { backgroundImage: `linear-gradient(180deg, transparent, rgba(0,0,0,.74)), url("${itemDetail.image}")` } : undefined}
+                >
+                  <span>{itemDetail.subtitle || category.label}</span>
+                </div>
+              )}
+              <div className={styles.mobileCardBody}>
+                <span className={styles.mobileEyebrow}>{itemDetail.subtitle || category.label}</span>
+                <strong>{item.label}</strong>
+                <p>{itemDetail.description}</p>
+                {itemDetail.meta?.length > 0 && <div className={styles.mobileMeta}>{itemDetail.meta.map((m) => <em key={m}>{m}</em>)}</div>}
+                {(item.href || item.external) && <button onClick={() => openItem(item)}>View more <span>↗</span></button>}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <div className={styles.hint}>← → categories &nbsp; ↑ ↓ items &nbsp; X / Enter open</div>
     </div>
   );
 }

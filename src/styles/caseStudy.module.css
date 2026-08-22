@@ -1,0 +1,133 @@
+.page {
+  width: 100%;
+  min-height: 100svh;
+  overflow-x: clip;
+  background: #050505;
+  color: #fff;
+  padding: 70px 6vw 110px max(110px, 6vw);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin-bottom: 50px;
+  color: #858585;
+  text-decoration: none;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, .9fr);
+  gap: 52px;
+  align-items: end;
+}
+.hero > * { min-width: 0; }
+
+.kicker {
+  color: #8f9398;
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.title {
+  max-width: 100%;
+  margin: 16px 0 24px;
+  font-size: clamp(52px, 8vw, 112px);
+  line-height: .86;
+  letter-spacing: -.065em;
+  overflow-wrap: anywhere;
+}
+
+.summary {
+  max-width: 760px;
+  margin: 0;
+  color: #aaa;
+  font-size: clamp(17px, 2vw, 26px);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.facts { min-width: 0; border-top: 1px solid #242424; }
+.fact {
+  display: grid;
+  grid-template-columns: minmax(90px, .5fr) minmax(0, 1fr);
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid #181818;
+  font-size: 12px;
+}
+.fact span { color: #666; }
+.fact strong { min-width: 0; text-align: right; overflow-wrap: anywhere; }
+
+.cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  margin: 64px 0 28px;
+  overflow: hidden;
+  border: 1px solid #202020;
+  border-radius: 26px;
+  background: radial-gradient(circle at 70% 20%, rgba(255,255,255,.08), transparent 32%), #0c0c0c;
+}
+.cover img,
+.shot img { width: 100%; height: 100%; object-fit: cover; }
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  color: #5e5e5e;
+  text-align: center;
+}
+.placeholder div { min-width: 0; max-width: 100%; }
+.placeholder strong { display: block; margin-bottom: 7px; color: #9a9a9a; overflow-wrap: anywhere; }
+.placeholder code { display: block; max-width: 100%; color: #626262; font-size: 11px; overflow-wrap: anywhere; white-space: normal; }
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr);
+  gap: 70px;
+  margin-top: 60px;
+}
+.sticky { position: sticky; top: 40px; align-self: start; min-width: 0; }
+.sticky h3,
+.content h3 { margin: 0 0 18px; color: #656565; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; }
+.tech { display: flex; flex-wrap: wrap; gap: 7px; }
+.tech span { max-width: 100%; padding: 7px 10px; border: 1px solid #252525; border-radius: 999px; color: #aaa; font-size: 11px; overflow-wrap: anywhere; }
+.content { min-width: 0; }
+.content > p { margin: 0; color: #aaa; font-size: 17px; line-height: 1.8; overflow-wrap: anywhere; }
+.content ul { margin: 28px 0 0; padding: 0; list-style: none; }
+.content li { padding: 17px 0; border-top: 1px solid #1e1e1e; color: #c2c2c2; line-height: 1.55; overflow-wrap: anywhere; }
+
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 70px; }
+.shot { position: relative; min-width: 0; aspect-ratio: 4 / 3; overflow: hidden; border: 1px solid #1c1c1c; border-radius: 18px; background: #0a0a0a; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.link { max-width: 100%; padding: 11px 15px; border-radius: 999px; background: #fff; color: #000; text-decoration: none; font-size: 11px; font-weight: 700; overflow-wrap: anywhere; }
+
+@media (max-width: 900px) {
+  .page { padding: 54px 20px 118px; }
+  .back { margin-bottom: 34px; }
+  .hero,
+  .body { grid-template-columns: 1fr; gap: 32px; }
+  .title { font-size: clamp(44px, 13vw, 68px); line-height: .9; }
+  .summary { font-size: 17px; }
+  .cover { margin-top: 40px; aspect-ratio: 4 / 3; border-radius: 20px; }
+  .sticky { position: static; }
+  .gallery { grid-template-columns: 1fr; margin-top: 48px; }
+  .shot { aspect-ratio: 16 / 10; }
+}
+
+@media (max-width: 480px) {
+  .page { padding-inline: 16px; }
+  .fact { grid-template-columns: 78px minmax(0,1fr); gap: 12px; font-size: 11px; }
+  .content > p { font-size: 15px; }
+  .content li { font-size: 14px; }
+}

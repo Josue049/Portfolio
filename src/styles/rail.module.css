@@ -1,0 +1,86 @@
+.rail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 80;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-right: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.48);
+  backdrop-filter: blur(14px);
+}
+
+.item {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: #777;
+  text-decoration: none;
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.item:hover,
+.active {
+  color: #fff;
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
+}
+
+.active { background: #fff; color: #000; }
+.divider { width: 24px; height: 1px; flex: 0 0 1px; margin: 3px; background: rgba(255,255,255,.12); }
+
+.item::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 56px;
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: #111;
+  color: #fff;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease;
+}
+.item:hover::after { opacity: 1; }
+
+@media (max-width: 760px) {
+  .rail {
+    left: 50%;
+    right: auto;
+    top: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: min(420px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    height: 62px;
+    padding: 7px 10px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 2px;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 20px;
+    background: rgba(8,8,8,.9);
+    box-shadow: 0 14px 50px rgba(0,0,0,.42);
+  }
+
+  .divider { width: 1px; height: 25px; flex: 0 0 1px; margin: 0 2px; }
+  .item { width: 42px; height: 42px; flex: 0 0 42px; }
+  .item::after { display: none; }
+}
+
+@media (max-width: 360px) {
+  .rail { width: calc(100vw - 16px); max-width: calc(100vw - 16px); }
+  .item { width: 39px; height: 39px; flex-basis: 39px; }
+}

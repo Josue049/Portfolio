@@ -1,16 +1,34 @@
-# React + Vite
+# Josué Gutiérrez — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portfolio personal construido con React + Vite.
 
-Currently, two official plugins are available:
+## Ejecutar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## Build
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm run build
+```
 
-## Expanding the ESLint configuration
+## Contenido
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+La información principal está centralizada en:
+
+`src/data/portfolio.js`
+
+## Imágenes
+
+- Desktop home: `public/FondoNegro.png`
+- Mobile home: `public/FondoNegroMobile.jpg`
+- Proyectos: revisa `public/projects/IMAGE_GUIDE.md`
+
+Los case studies y la vista `/work` ya tienen espacios preparados para portada y galería. Si una imagen todavía no existe, la interfaz conserva el espacio como placeholder sin romper el layout.
+
+## Responsive
+
+Se trabajaron layouts específicos para desktop, tablet y móvil en Home, About, Work, Contact y Case Studies. La navegación lateral se convierte en una barra inferior centrada en móvil y se mantiene dentro del viewport.
