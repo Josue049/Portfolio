@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SiteRail from "../components/SiteRail";
 import { categories } from "../data/portfolio";
 import styles from "../styles/work.module.css";
 
@@ -37,7 +36,7 @@ function MediaPreview({ detail, title, category }) {
   );
 }
 
-export default function Work() {
+export default function Work({ active = true }) {
   const navigate = useNavigate();
   const [catIndex, setCatIndex] = useState(0);
   const [itemIndex, setItemIndex] = useState(0);
@@ -58,7 +57,12 @@ export default function Work() {
   }, [activeItem, navigate]);
 
   useEffect(() => {
+    if (!active) return;
     const onKey = (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      const target = event.target;
+      if (target instanceof HTMLElement && (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))) return;
+      if (event.key.startsWith("Arrow")) event.preventDefault();
       if (event.key === "ArrowLeft") selectCategory(Math.max(0, catIndex - 1));
       if (event.key === "ArrowRight") selectCategory(Math.min(categories.length - 1, catIndex + 1));
       if (event.key === "ArrowUp") setItemIndex((i) => Math.max(0, i - 1));
@@ -68,7 +72,7 @@ export default function Work() {
 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [catIndex, category.items.length, openItem, selectCategory]);
+  }, [active, catIndex, category.items.length, openItem, selectCategory]);
 
   const slotWidth = 100 / categories.length;
   const getLeft = (ci) => (ci - catIndex + ACTIVE_SLOT) * slotWidth + slotWidth / 2;
@@ -77,7 +81,7 @@ export default function Work() {
 
   return (
     <div className={styles.ps3Root}>
-      <SiteRail />
+      
       <div className={styles.ambientOne} />
       <div className={styles.ambientTwo} />
 

@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import SiteRail from "../components/SiteRail";
 import { profile } from "../data/portfolio";
 import styles from "../styles/home.module.css";
 import loadedStyles from "../styles/loaded.module.css";
 
-export default function Home() {
-  const [introDone, setIntroDone] = useState(false);
+export default function Home({ introDone, onIntroDone }) {
 
   return (
     <>
@@ -15,7 +12,7 @@ export default function Home() {
           className={loadedStyles.loaded}
           aria-hidden="true"
           onAnimationEnd={(event) => {
-            if (event.target === event.currentTarget) setIntroDone(true);
+            if (event.target === event.currentTarget) onIntroDone();
           }}
         >
           <div className={loadedStyles.Presentation}>
@@ -27,7 +24,6 @@ export default function Home() {
       )}
 
       <div className={styles.hero}>
-        {introDone && <SiteRail />}
 
         <div className={styles.content}>
           <div className={styles.redes} aria-label="Social links">

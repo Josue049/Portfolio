@@ -1,11 +1,10 @@
-import SiteRail from "../components/SiteRail";
 import { profile } from "../data/portfolio";
 import styles from "../styles/global.module.css";
 
 export default function About() {
   return (
     <div className={styles.page}>
-      <SiteRail />
+      
 
       <section className={styles.aboutHero}>
         <div className={styles.aboutIntro}>
