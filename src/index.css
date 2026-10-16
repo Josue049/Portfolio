@@ -1,14 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap');
+:root {
+  --ivory: #f7f7f2;
+  --ivory-2: #ecece4;
+  --ink: #131211; /* warm graphite used for dark sections */
+  --ink-2: #1d1b19;
+  --navy: #20283b;
+  --navy-2: #2b3550;
+  --blue: #435bee;
+  --coral: #ff6b57;
+  --mint: #7fdcb9;
+  --muted: #565d70;
+  --line: rgba(32, 40, 59, 0.16);
+  --display: "Space Grotesk", system-ui, sans-serif;
+  --body: "Inter", system-ui, sans-serif;
+  --gutter: clamp(20px, 5vw, 64px);
+  --max: 1240px;
+  --header: 72px;
+  --intro: 0s; /* extra delay for hero animations while the splash is playing */
+  --ease: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+[data-intro="play"] { --intro: 1.1s; }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { width: 100%; background: #000; scroll-behavior: smooth; overflow-x: clip; }
-body { width: 100%; min-width: 0; margin: 0; background: #000; font-family: Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
-#root { width: 100%; min-width: 0; overflow-x: clip; }
-button, input, a { font: inherit; }
-button { appearance: none; }
-img, svg, video { max-width: 100%; }
-::selection { background: #fff; color: #000; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--navy);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3, p, ul, figure, dl, dd { margin: 0; }
+ul { padding: 0; list-style: none; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+button { font: inherit; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+.on-dark :focus-visible, .site-header :focus-visible, .menu :focus-visible { outline-color: var(--mint); }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }

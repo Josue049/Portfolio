@@ -1,35 +1,73 @@
-import { profile } from "../data/portfolio";
-import styles from "../styles/global.module.css";
+import { profile, about, experience, education, awards, talks } from "../data/portfolio";
+import CvLink from "../components/CvLink";
+import Reveal from "../components/Reveal";
+import TechStack from "../components/TechStack";
+
+function Timeline({ title, items }) {
+  return (
+    <Reveal as="section" className="about__block">
+      <h2>{title}</h2>
+      <ul className="timeline">
+        {items.map((x) => (
+          <li key={x.id}>
+            <h3>{x.title}</h3>
+            <p className="timeline__sub">{x.subtitle} · {x.meta.join(" · ")}</p>
+            <p>{x.description}</p>
+          </li>
+        ))}
+      </ul>
+    </Reveal>
+  );
+}
 
 export default function About() {
   return (
-    <div className={styles.page}>
-      
-
-      <section className={styles.aboutHero}>
-        <div className={styles.aboutIntro}>
-          <div className={styles.kicker}>About / Josué</div>
-          <h1 className={styles.title}>BUILD.<br />LEARN.<br />SHIP.</h1>
-          <p className={styles.lead}>{profile.intro}</p>
+    <>
+      <section className="container page about__hero">
+        <div>
+          <p className="eyebrow eyebrow--blue">About</p>
+          <h1>Build.<br />Learn.<br />Ship.<span className="sr-only"> — About Josué Gutiérrez, Software Engineer</span></h1>
         </div>
-
-        <aside className={styles.panel}>
-          <h3>Snapshot</h3>
-          <div className={styles.stat}><strong>Lima, Perú</strong><span>Based in</span></div>
-          <div className={styles.stat}><strong>CS50x</strong><span>Harvard · completed</span></div>
-          <div className={styles.stat}><strong>Full Stack + AI</strong><span>Primary focus</span></div>
-          <div className={styles.stat}><strong>1st Place</strong><span>CodePi Innovation Challenge · France</span></div>
-        </aside>
+        <div className="about__portrait">
+          <picture>
+            <source srcSet="/FondoNegro.webp" type="image/webp" />
+            <img src="/FondoNegro.png" width="1919" height="911" alt="Josué Gutiérrez in profile, wearing round sunglasses" loading="lazy" decoding="async" />
+          </picture>
+        </div>
       </section>
 
-      <section className={styles.aboutBody}>
-        <div className={styles.copy}>
-          <p>I started programming young and kept moving toward projects where software has to survive outside a classroom: agriculture, realtime services, public platforms, education and applied AI.</p>
-          <p>My favorite work sits between engineering and product design. I like understanding the system end-to-end, from data model and APIs to the interface people actually touch.</p>
+      <section className="container about__intro">
+        <p className="about__lead">{profile.intro}</p>
+        <div className="about__cols-text">
+          {about.paragraphs.map((t) => <p key={t}>{t}</p>)}
         </div>
-
-        <div className={styles.stack}>{profile.stack.map((x) => <span className={styles.chip} key={x}>{x}</span>)}</div>
+        <dl className="snapshot">
+          {about.snapshot.map(([k, v]) => (<div key={k}><dt>{k}</dt><dd>{v}</dd></div>))}
+        </dl>
+        <CvLink className="cv-link--light" />
       </section>
-    </div>
+
+      <section className="band">
+        <div className="container">
+          <Reveal className="section__head">
+            <p className="eyebrow eyebrow--blue">Technologies</p>
+            <h2>The tools behind the work.</h2>
+          </Reveal>
+          <TechStack />
+        </div>
+      </section>
+
+      <section className="section container about__cols">
+        <Timeline title="Experience" items={experience} />
+        <Timeline title="Education" items={education} />
+      </section>
+
+      <section className="section on-dark">
+        <div className="container about__cols">
+          <Timeline title="Awards" items={awards} />
+          <Timeline title="Talks" items={talks} />
+        </div>
+      </section>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 # Josué Gutiérrez — Portfolio
 
-Portfolio personal construido con React + Vite.
+Portfolio personal construido con React + Vite + React Router.
 
 ## Ejecutar
 
@@ -15,20 +15,37 @@ npm run dev
 npm run build
 ```
 
+`vite build` va seguido de `scripts/postbuild.mjs`, que genera HTML estático por ruta
+(`dist/work/index.html`, `dist/work/<proyecto>/index.html`, …), `404.html`, `robots.txt` y,
+si hay dominio configurado, `sitemap.xml`.
+
 ## Contenido
 
-La información principal está centralizada en:
+La información principal está centralizada en `src/data/portfolio.js`.
+Títulos y descripciones SEO por página: `src/seo/meta.js` (los proyectos usan su `title` y `summary`).
 
-`src/data/portfolio.js`
+## Dominio (SEO)
+
+Copia `.env.example` a `.env` (o define la variable en tu hosting) cuando tengas el dominio:
+
+```
+VITE_SITE_URL=https://tu-dominio.com
+```
+
+Sin ese valor se omiten canonical, `og:url`, `og:image`, las URLs del JSON-LD y el sitemap
+(el build lo avisa). No se inventa ningún dominio.
+
+## CV
+
+Coloca el PDF en `public/Josue-Gutierrez-CV.pdf`. Los botones «Download CV» (Home y About)
+solo aparecen cuando el archivo existe.
+
+## Iconos y vista previa
+
+`public/favicon.svg`, `favicon.ico`, `favicon-48x48.png`, `icon-192.png`, `icon-512.png`,
+`apple-touch-icon.png`, `site.webmanifest` y `og-image.png` (1200×630).
 
 ## Imágenes
 
-- Desktop home: `public/FondoNegro.png`
-- Mobile home: `public/FondoNegroMobile.jpg`
-- Proyectos: revisa `public/projects/IMAGE_GUIDE.md`
-
-Los case studies y la vista `/work` ya tienen espacios preparados para portada y galería. Si una imagen todavía no existe, la interfaz conserva el espacio como placeholder sin romper el layout.
-
-## Responsive
-
-Se trabajaron layouts específicos para desktop, tablet y móvil en Home, About, Work, Contact y Case Studies. La navegación lateral se convierte en una barra inferior centrada en móvil y se mantiene dentro del viewport.
+- Home: `public/FondoNegro.webp` (con `FondoNegro.png` como respaldo)
+- Proyectos: revisa `public/projects/IMAGE_GUIDE.md`. Si una imagen no existe, la interfaz usa una portada tipográfica.

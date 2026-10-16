@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&family=Montserrat:wght@900&display=swap');
-
+/* Original intro ("JOSUÉ | Developer"), tightened from 3.6s to ~1.8s.
+   Fonts are loaded (subset) from index.html. Only transform is animated. */
 .loaded {
   position: fixed;
   inset: 0;
@@ -11,7 +11,7 @@
   overflow: hidden;
   background: #fff;
   color: #000;
-  animation: slideUp .8s cubic-bezier(.76,0,.24,1) 2.8s forwards;
+  animation: slideUp 0.6s cubic-bezier(0.76, 0, 0.24, 1) 1.2s forwards;
 }
 
 .Presentation {
@@ -36,29 +36,30 @@
 
 .name,
 .symbol { font-weight: 900; }
-.name { font-family: 'Montserrat', sans-serif; }
+.name { font-family: "Montserrat", sans-serif; }
 .name p {
   display: inline-block;
   padding-right: 8px;
   transform: translateX(130px);
-  animation: fadeInLeft 3s ease .6s forwards;
+  animation: fadeInLeft 1.4s ease 0.15s forwards;
 }
 
 .symbol {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Montserrat", sans-serif;
   transform: translateY(50px);
-  animation: fadeInUp 3s ease forwards;
+  animation: fadeInUp 1.4s ease forwards;
 }
 
 .title p {
   display: inline-block;
   padding-left: 8px;
   transform: translateX(-150px);
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 300;
-  animation: fadeInRight 3s ease 1s forwards;
+  animation: fadeInRight 1.4s ease 0.3s forwards;
 }
 
 @keyframes slideUp { to { transform: translateY(-105%); } }

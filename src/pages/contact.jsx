@@ -1,3 +1,43 @@
 import { profile } from "../data/portfolio";
-import styles from "../styles/global.module.css";
-export default function Contact(){return <div className={styles.page}><div className={styles.kicker}>Contact</div><h1 className={styles.title}>LET'S BUILD<br/>SOMETHING.</h1><p className={styles.lead}>For software, AI, innovation, talks or collaborations, these are the best places to reach me.</p><section className={styles.contactCard}><h2>Open to ambitious ideas.</h2><p>I’m especially interested in projects where software, AI and real-world systems meet. If you have something strange, useful or difficult in mind, I’ll probably want to hear about it.</p><div className={styles.links}><a className={styles.button} href={profile.socials.linkedin} target="_blank" rel="noreferrer"><i className="fa-brands fa-linkedin-in"/> LinkedIn</a><a className={`${styles.button} ${styles.secondary}`} href={profile.socials.github} target="_blank" rel="noreferrer"><i className="fa-brands fa-github"/> GitHub</a><a className={`${styles.button} ${styles.secondary}`} href={profile.socials.huggingface} target="_blank" rel="noreferrer">Hugging Face</a></div></section></div>}
+import Magnetic from "../components/Magnetic";
+import Roll from "../components/Roll";
+
+const handle = (url) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+
+export default function Contact() {
+  const { linkedin, github, huggingface } = profile.socials;
+  const links = [
+    ["LinkedIn", linkedin],
+    ["GitHub", github],
+    ["Hugging Face", huggingface],
+  ];
+  return (
+    <section className="contact on-dark">
+      <div className="container">
+        <p className="eyebrow rise">Contact</p>
+        <h1 className="rise" style={{ "--d": "0.08s" }}>Let’s build something that works.</h1>
+        <div className="contact__row rise" style={{ "--d": "0.2s" }}>
+          <div>
+            <p className="hero__lead">Open to collaborations, internships and projects in full-stack development and applied AI. Based in {profile.location}.</p>
+            <div className="actions">
+              <Magnetic>
+                <a className="btn btn--primary btn--xl" href={linkedin} target="_blank" rel="noreferrer"><Roll>Message me on LinkedIn</Roll> ↗</a>
+              </Magnetic>
+            </div>
+          </div>
+          <ul className="contact__links">
+            {links.map(([name, url]) => (
+              <li key={name}>
+                <a href={url} target="_blank" rel="noreferrer">
+                  <span><Roll>{name}</Roll></span>
+                  <small>{handle(url)}</small>
+                  <b aria-hidden="true">↗</b>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}

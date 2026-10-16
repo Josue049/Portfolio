@@ -167,53 +167,35 @@ export const talks = [
   { id: "youth-food-lab", title: "Youth Food Lab", subtitle: "Innovation spaces", meta: ["WFF", "Youth", "Food systems"], description: "Facilitating spaces where young people can move from ideas to prototypes and proposals around food-system challenges." },
 ];
 
-const projectItem = (project) => ({
-  id: project.id,
-  label: project.title,
-  href: `/work/${project.id}`,
-  detail: {
-    subtitle: project.eyebrow,
-    meta: [project.year, project.status],
-    description: project.summary,
-    body: project.description,
-    role: project.role,
-    tech: project.tech,
-    highlights: project.highlights,
-    image: project.image,
-    gallery: project.gallery,
-    imageNotes: project.imageNotes,
-    location: project.location,
-    live: project.live,
-  },
-});
+export const projectGroups = {
+  "data-agro-5": "AI & Data",
+  "wff-peru-chapter": "Web & Backend",
+  "sleep-watch-alert": "AI & Data",
+  "math-game": "Education",
+  "parkgo-services": "Web & Backend",
+  "basura-ia": "AI & Data",
+  "museo-ar": "AR / 3D",
+};
 
-export const categories = [
-  {
-    id: "projects",
-    label: "PROJECTS",
-    type: "project",
-    items: projects.map(projectItem),
-  },
-  { id: "experience", label: "EXPERIENCE", items: experience.map((x) => ({ ...x, label: x.title, detail: x })) },
-  {
-    id: "ai",
-    label: "AI",
-    type: "project",
-    items: projects
-      .filter((p) => /AI|Vision|IoT|Learning|YOLO|Random Forest/i.test(`${p.eyebrow} ${p.tech.join(" ")}`))
-      .map(projectItem),
-  },
-  { id: "awards", label: "AWARDS", items: awards.map((x) => ({ ...x, label: x.title, detail: x })) },
-  { id: "education", label: "EDUCATION", items: education.map((x) => ({ ...x, label: x.title, detail: x })) },
-  { id: "talks", label: "TALKS", items: talks.map((x) => ({ ...x, label: x.title, detail: x })) },
-  {
-    id: "contact",
-    label: "CONTACT",
-    items: [
-      { id: "github", label: "GitHub", detail: { subtitle: "Source code", meta: ["Repositories"], description: "Projects, experiments and development work." }, external: profile.socials.github },
-      { id: "linkedin", label: "LinkedIn", detail: { subtitle: "Professional profile", meta: ["Networking"], description: "Experience, projects and professional updates." }, external: profile.socials.linkedin },
-      { id: "hf", label: "Hugging Face", detail: { subtitle: "AI profile", meta: ["Machine Learning"], description: "Models, datasets and AI experiments." }, external: profile.socials.huggingface },
-      { id: "contact", label: "Contact page", detail: { subtitle: "Let's build something", meta: ["Open to collaborations"], description: "Ways to reach me and a quick overview of what I work on." }, href: "/contact" },
-    ],
-  },
+export const projectFilters = ["All", ...new Set(Object.values(projectGroups))];
+
+export const about = {
+  paragraphs: [
+    "I started programming young and kept moving toward projects where software has to survive outside a classroom: agriculture, realtime services, public platforms, education and applied AI.",
+    "My favorite work sits between engineering and product design. I like understanding the system end-to-end, from data model and APIs to the interface people actually touch.",
+  ],
+  snapshot: [
+    ["Based in", "Lima, Perú"],
+    ["Primary focus", "Full Stack + AI"],
+    ["Completed", "CS50x · Harvard"],
+    ["Recognition", "1st Place · CodePi, France"],
+  ],
+};
+
+// Same technologies as profile.stack, grouped for display. Icons live in /public/tech.
+export const stackGroups = [
+  { title: "Front-end", items: [["React", "react"], ["JavaScript", "javascript"], ["TypeScript", "typescript"]] },
+  { title: "Back-end, APIs & data", items: [["Python", "python"], ["Java", "java"], ["FastAPI", "fastapi"], ["Spring Boot", "spring"], ["PostgreSQL", "postgresql"]] },
+  { title: "Tools, environment & DevOps", items: [["Docker", "docker"]] },
+  { title: "Exploring & learning", items: [["Machine Learning", "machine-learning"]] },
 ];
