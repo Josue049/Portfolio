@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/home";
-import Work from "./pages/work";
-import About from "./pages/about";
-import Contact from "./pages/contact";
-import CaseStudy from "./pages/caseStudy";
-import NotFound from "./pages/notFound";
+import { loadAbout, loadCaseStudy, loadContact, loadNotFound, loadWork } from "./routeChunks";
+const Work = lazy(loadWork);
+const About = lazy(loadAbout);
+const Contact = lazy(loadContact);
+const CaseStudy = lazy(loadCaseStudy);
+const NotFound = lazy(loadNotFound);
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -16,9 +17,9 @@ function ScrollToTop() {
   return null;
 }
 
-export default function App() {
+export function AppRoutes() {
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
@@ -30,6 +31,14 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

@@ -14,25 +14,23 @@
     <title>Josué Gutiérrez | Software Engineer &amp; Full-Stack Developer</title>
     <meta name="description" content="Portfolio of Josué Gutiérrez, a software engineer from Lima, Perú focused on full-stack development and applied AI." />
     <!--seo:end-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" />
-    <!-- Intro splash only: Montserrat 900 + Quicksand 300 subset to the splash words -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Quicksand:wght@300&text=JOSU%C3%89%7CDeveloper&display=block" />
+    <!-- Fonts are self-hosted (public/fonts, latin subset): no third-party CSS or connections block rendering. -->
+    <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/montserrat-900-splash.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/quicksand-300-splash.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      #root[data-prerender] { visibility: hidden; } /* build-time HTML for crawlers; React replaces it on mount */
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(/fonts/inter-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+      @font-face { font-family: "Space Grotesk"; font-style: normal; font-weight: 500 700; font-display: swap; src: url(/fonts/space-grotesk-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+      /* Intro splash only: Montserrat 900 + Quicksand 300 subset to the splash words */
+      @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 900; font-display: block; src: url(/fonts/montserrat-900-splash.woff2) format("woff2"); unicode-range: U+44-45, U+4a, U+4f, U+53, U+55, U+65, U+6c, U+6f-70, U+72, U+76, U+7c, U+c9, U+d3, U+da, U+e9, U+f3, U+13a, U+155, U+15a, U+301, U+1e55; }
+      @font-face { font-family: "Quicksand"; font-style: normal; font-weight: 300; font-display: block; src: url(/fonts/quicksand-300-splash.woff2) format("woff2"); unicode-range: U+44-45, U+4a, U+4f, U+53, U+55, U+65, U+6c, U+6f-70, U+72, U+76, U+7c, U+c9, U+d3, U+da, U+e9, U+f3, U+13a, U+155, U+15a, U+301, U+1e55; }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <noscript>
-      <main style="font-family: sans-serif; padding: 2rem; max-width: 40rem">
-        <h1>Josué Gutiérrez — Software Engineer</h1>
-        <p>Full-stack developer and applied AI builder based in Lima, Perú. Enable JavaScript to view the full portfolio.</p>
-        <p>
-          <a href="https://github.com/Josue049">GitHub</a> ·
-          <a href="https://www.linkedin.com/in/josuegutierrezcuellar/">LinkedIn</a> ·
-          <a href="https://huggingface.co/MrJosue09">Hugging Face</a>
-        </p>
-      </main>
-    </noscript>
+    <noscript><style>#root[data-prerender] { visibility: visible; }</style></noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

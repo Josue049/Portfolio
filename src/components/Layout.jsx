@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { profile } from "../data/portfolio";
 import { SITE_URL } from "../siteConfig";
@@ -32,6 +32,8 @@ export default function Layout() {
   const firstLinkRef = useRef(null);
 
   useEffect(() => { applyMeta(getMeta(pathname), SITE_URL); }, [pathname]);
+  // The static prerender (for crawlers) stays hidden until React has mounted over it.
+  useEffect(() => { document.getElementById("root")?.removeAttribute("data-prerender"); }, []);
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
@@ -53,7 +55,7 @@ export default function Layout() {
 
       <header className="site-header">
         <div className="site-header__inner">
-          <TLink to="/" className="brand" aria-label="Josué Gutiérrez — home">JG.</TLink>
+          <TLink to="/" className="brand" aria-label="JG. — Josué Gutiérrez, home">JG.</TLink>
           <button
             ref={toggleRef}
             type="button"
@@ -93,7 +95,7 @@ export default function Layout() {
         </div>
       </div>
 
-      <main id="main" inert={open}><Outlet /></main>
+      <main id="main" inert={open}><Suspense fallback={null}><Outlet /></Suspense></main>
 
       <footer className="site-footer on-dark" inert={open}>
         <div className="container site-footer__inner">
