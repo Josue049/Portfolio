@@ -5,6 +5,7 @@ import { SITE_URL } from "../siteConfig";
 import { applyMeta, getMeta } from "../seo/meta";
 import { TLink, TNavLink } from "./TLink";
 import GlobalFX from "./GlobalFX";
+import Scroll3D from "./Scroll3D";
 import Loader from "./Loader";
 import Roll from "./Roll";
 import ViewCursor from "./ViewCursor";
@@ -51,6 +52,7 @@ export default function Layout() {
       <Loader />
       <ViewCursor />
       <GlobalFX />
+      <Scroll3D pathname={pathname} />
       <a className="skip-link" href="#main">Skip to content</a>
 
       <header className="site-header">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { projects, projectGroups, projectFilters } from "../data/portfolio";
-import ProjectGallery from "../components/ProjectGallery";
+import ProjectList from "../components/ProjectList";
 
 export default function Work() {
   const [filter, setFilter] = useState("All");
@@ -19,7 +19,7 @@ export default function Work() {
           ))}
         </div>
         <p className="sr-only" aria-live="polite">{shown.length} projects shown</p>
-        <ProjectGallery key={filter} items={shown} />
+        <ProjectList key={filter} items={shown} />
       </div>
     </div>
   );

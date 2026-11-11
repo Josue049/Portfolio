@@ -3,7 +3,7 @@ import { TLink } from "../components/TLink";
 import CvLink from "../components/CvLink";
 import Manifesto from "../components/Manifesto";
 import Magnetic from "../components/Magnetic";
-import ProjectGallery from "../components/ProjectGallery";
+import ProjectList from "../components/ProjectList";
 import Reveal from "../components/Reveal";
 import Roll from "../components/Roll";
 import TechStack from "../components/TechStack";
@@ -57,7 +57,7 @@ export default function Home() {
             <p className="eyebrow">Featured work</p>
             <h2>Products built to work outside the classroom.</h2>
           </Reveal>
-          <ProjectGallery items={featured} />
+          <ProjectList items={featured} />
           <TLink className="link-arrow" to="/work">All projects →</TLink>
         </div>
       </section>

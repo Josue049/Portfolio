@@ -43,8 +43,15 @@ export default function CaseStudy() {
           <p className="eyebrow">{p.eyebrow} · {projectGroups[p.id]}</p>
           <h1>{p.title}</h1>
           <p className="case__lead">{p.summary}</p>
-          {p.live && (
-            <a className="btn btn--primary btn--lg" href={p.live} target="_blank" rel="noreferrer">Visit project ↗</a>
+          {(p.live || p.repo) && (
+            <div className="case__actions" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+              {p.live && (
+                <a className="btn btn--primary btn--lg" href={p.live} target="_blank" rel="noreferrer">Visit project ↗</a>
+              )}
+              {p.repo && (
+                <a className="btn btn--lg" href={p.repo} target="_blank" rel="noreferrer">View on GitHub ↗</a>
+              )}
+            </div>
           )}
           <dl className="case__meta">
             {meta.map(([k, v]) => (<div key={k}><dt>{k}</dt><dd>{v}</dd></div>))}
