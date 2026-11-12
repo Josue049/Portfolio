@@ -3,7 +3,7 @@ import { TLink } from "../components/TLink";
 import CvLink from "../components/CvLink";
 import Manifesto from "../components/Manifesto";
 import Magnetic from "../components/Magnetic";
-import ProjectList from "../components/ProjectList";
+import ProjectShowcase from "../components/ProjectShowcase";
 import Reveal from "../components/Reveal";
 import Roll from "../components/Roll";
 import TechStack from "../components/TechStack";
@@ -12,7 +12,6 @@ import ScrollStroke from "../components/ScrollStroke";
 const delay = (s) => ({ "--d": `${s}s` });
 
 export default function Home() {
-  const featured = projects.filter((p) => p.featured).slice(0, 4);
   const [first, ...rest] = profile.shortName.split(" ");
   const [title, ...areas] = profile.role.split(" · ");
   return (
@@ -51,13 +50,15 @@ export default function Home() {
         </div>
       </ScrollStroke>
 
-      <section className="section section--gallery on-dark">
+      <section className="section section--showcase on-dark" aria-labelledby="featured-title">
         <div className="container">
           <Reveal className="section__head">
-            <p className="eyebrow">Featured work</p>
-            <h2>Products built to work outside the classroom.</h2>
+            <p className="eyebrow">Featured work / Selected projects</p>
+            <h2 id="featured-title">Products built to work outside the classroom.</h2>
           </Reveal>
-          <ProjectList items={featured} />
+        </div>
+        <ProjectShowcase items={projects} />
+        <div className="container">
           <TLink className="link-arrow" to="/work">All projects →</TLink>
         </div>
       </section>

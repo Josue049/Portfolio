@@ -12,7 +12,7 @@ function useTransitionClick(to, vtName, onClick) {
     if (!document.startViewTransition || prefersReducedMotion()) return;
     e.preventDefault();
     if (vtName) {
-      const cover = e.currentTarget.querySelector(".cover");
+      const cover = e.currentTarget.querySelector(".cover, .poster");
       if (cover) cover.style.viewTransitionName = vtName;
     }
     document.startViewTransition(() => flushSync(() => navigate(to)));
